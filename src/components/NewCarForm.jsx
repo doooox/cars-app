@@ -64,6 +64,18 @@ function AddCar() {
         setIsAutomatic(false)
         setEngine('')
     }
+    const previewHandler = () => {
+        const transmition = (!isAutomatic) ? 'manual transmision' : 'automatic transmision'
+        alert(`
+            Car brand: ${brand}
+            Car model: ${model}
+            Year of production: ${year}
+            Cars maximum speed is ${maxSpeed} km/h
+            Number of doors: ${numberOfDoors}
+            The car has ${transmition}
+            Engine type: ${engine}
+        `)
+    }
     const years = () => {
         let arr = [];
         for (let i = 1990; i <= 2018; i++) arr.push(i);
@@ -158,6 +170,7 @@ function AddCar() {
                 </label>
                 <button type="submit">Submit</button>
                 <button type="button" onClick={resetHandler}>Reset</button>
+                <button type="button" onClick={previewHandler}>Preview</button>
             </form>
         </div>
     );
