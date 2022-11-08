@@ -11,7 +11,7 @@ function App() {
           <Link to="/cars">Cars</Link>
         </li>
       </ul>
-      <Routes/>
+      <Routes />
     </div>
   );
 }
