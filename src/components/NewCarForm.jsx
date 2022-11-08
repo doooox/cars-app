@@ -92,6 +92,8 @@ function AddCar() {
                 <input
                     type="text"
                     id="brand"
+                    required
+                    minLength={2}
                     value={brand}
                     onChange={brandHandler}
                 />
@@ -102,6 +104,8 @@ function AddCar() {
                 <input
                     type="text"
                     id="model"
+                    required
+                    minLength={2}
                     value={model}
                     onChange={modelHandler}
                 />
@@ -110,12 +114,11 @@ function AddCar() {
                     Select year
                 </label>
                 <select
-                    name='year'
                     value={year}
                     onChange={yearHandler}
                 >
                     {years().map((year, index) => (
-                        <option key={index} value={year}>{year}</option>
+                        <option key={index} required value={year}>{year}</option>
                     ))}
                 </select>
                 <label
@@ -135,7 +138,7 @@ function AddCar() {
                 </label>
                 <input
                     type="number"
-                    name=""
+                    required
                     id="maxSpeed"
                     value={numberOfDoors}
                     onChange={nuberOfDoorsHandler}
@@ -146,6 +149,7 @@ function AddCar() {
                 </label>
                 <input
                     type="checkbox"
+                    required
                     id="isAutomatic"
                     value={isAutomatic}
                     checked={isAutomatic}
@@ -159,6 +163,7 @@ function AddCar() {
                                 {type}
                                 <input
                                     type='radio'
+                                    required
                                     onChange={engineHandler}
                                     name='engine'
                                     checked={type == engine}
