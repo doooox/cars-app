@@ -6,12 +6,19 @@ import Routes from './Routes';
 function App() {
   return (
     <div className="App">
-      <ul>
-        <li>
-          <Link to="/cars">Cars</Link>
-        </li>
-      </ul>
-      <Routes />
+      <div>
+        <nav>
+          <ul className="nav">
+            <li>
+              <Link to="/cars" className='link'>Cars</Link>
+            </li>
+            <li>
+              <Link to="/add" className='link'>Add new car</Link>
+            </li>
+          </ul>
+          <Routes />
+        </nav>
+      </div>
     </div>
   );
 }

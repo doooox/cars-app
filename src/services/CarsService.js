@@ -10,6 +10,10 @@ class CarsService {
     }
     return [];
   }
+  async create(newCar) {
+    const { data } = await axiosObj.post("cars", newCar);
+    return data;
+  }
 }
 
 export default new CarsService();
