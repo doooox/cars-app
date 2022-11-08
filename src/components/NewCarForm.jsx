@@ -54,6 +54,16 @@ function AddCar() {
         createCar();
         history.push("/cars");
     };
+
+    const resetHandler = () => {
+        setBrand('')
+        setModel('')
+        setYear('')
+        setMaxSpeed('')
+        setNumberOfDoors('')
+        setIsAutomatic(false)
+        setEngine('')
+    }
     const years = () => {
         let arr = [];
         for (let i = 1990; i <= 2018; i++) arr.push(i);
@@ -126,6 +136,7 @@ function AddCar() {
                     type="checkbox"
                     id="isAutomatic"
                     value={isAutomatic}
+                    checked={isAutomatic}
                     onChange={isAutomaticHandler}
                 />
                 <label>
@@ -146,6 +157,7 @@ function AddCar() {
                     </div>
                 </label>
                 <button type="submit">Submit</button>
+                <button type="button" onClick={resetHandler}>Reset</button>
             </form>
         </div>
     );
