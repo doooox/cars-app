@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import './AddCar.css'
 import CarsService from '../services/CarsService'
+import ErrorPage from '../UI/ErrorPage'
 
 const AddCars = () => {
     let { id } = useParams();
     const history = useHistory();
-    const [brand, setBrand] = useState("");
-    const [model, setModel] = useState("");
-    const [year, setYear] = useState(1990);
-    const [maxSpeed, setMaxSpeed] = useState(0);
-    const [numberOfDoors, setNumberOfDoors] = useState(0);
+    const [brand, setBrand] = useState();
+    const [model, setModel] = useState();
+    const [year, setYear] = useState();
+    const [maxSpeed, setMaxSpeed] = useState();
+    const [numberOfDoors, setNumberOfDoors] = useState();
     const [isAutomatic, setIsAutomatic] = useState(false);
-    const [engine, setEngine] = useState(null);
+    const [engine, setEngine] = useState();
+    const [error, setError] = useState()
 
     const engines = ["diesel", "petrol", "electric", "hybrid"];
 
@@ -40,16 +42,17 @@ const AddCars = () => {
 
     const getSingleCar = async () => {
         if (!id) {
+            return
         }
-            const carData = await CarsService.getCar(id);
-            setBrand(carData.brand);
-            setModel(carData.model);
-            setYear(carData.year);
-            setMaxSpeed(carData.maxSpeed);
-            setNumberOfDoors(carData.numberOfDoors);
-            setIsAutomatic(carData.isAutomatic);
-            setEngine(carData.engine);
-            console.log(carData);
+        const carData = await CarsService.getCar(id);
+        setBrand(carData.brand);
+        setModel(carData.model);
+        setYear(carData.year);
+        setMaxSpeed(carData.maxSpeed);
+        setNumberOfDoors(carData.numberOfDoors);
+        setIsAutomatic(carData.isAutomatic);
+        setEngine(carData.engine);
+
     };
     useEffect(() => {
         getSingleCar();
@@ -77,6 +80,44 @@ const AddCars = () => {
                 isAutomatic,
                 engine,
             });
+        }
+
+
+        if (!brand) {
+            setError({
+                title: 'Input Error',
+                message: 'Car brand must contain min 2 characters'
+            })
+            return
+        }
+        if (!model) {
+            setError({
+                title: 'Input Error',
+                message: 'Car model must contain min 2 characters'
+            })
+            return
+        }
+
+        if (!year) {
+            setError({
+                title: 'Input Error',
+                message: 'Select a year!'
+            })
+            return
+        }
+        if (!numberOfDoors) {
+            setError({
+                title: 'Input Error',
+                message: 'Enter Number of doors!'
+            })
+            return
+        }
+        if (!engine) {
+            setError({
+                title: 'Input Error',
+                message: 'Select engine type!'
+            })
+            return
         }
         history.push("/cars");
     }
@@ -109,8 +150,13 @@ const AddCars = () => {
         return arr;
     };
 
+    const errorHandler = () => {
+        setError(null)
+    }
+
     return (
         <div>
+            {error && <ErrorPage title={error.title} message={error.message} onUnsetError={errorHandler} />}
             <form className='form' onSubmit={handleSubmit}>
                 <label
                     htmlFor="brand">
@@ -119,8 +165,6 @@ const AddCars = () => {
                 <input
                     type="text"
                     id="brand"
-                    required
-                    minLength={2}
                     value={brand}
                     onChange={brandHandler}
                 />
@@ -131,8 +175,6 @@ const AddCars = () => {
                 <input
                     type="text"
                     id="model"
-                    required
-                    minLength={2}
                     value={model}
                     onChange={modelHandler}
                 />
@@ -145,12 +187,12 @@ const AddCars = () => {
                     onChange={yearHandler}
                 >
                     {years().map((year, index) => (
-                        <option key={index} required value={year}>{year}</option>
+                        <option key={index} value={year}>{year}</option>
                     ))}
                 </select>
                 <label
                     htmlFor="maxSpeed">
-                    Enter cars maximum speed
+                    Enter cars maximum speed 
                 </label>
                 <input
                     type="number"
@@ -165,7 +207,6 @@ const AddCars = () => {
                 </label>
                 <input
                     type="number"
-                    required
                     id="maxSpeed"
                     value={numberOfDoors}
                     onChange={nuberOfDoorsHandler}
@@ -189,7 +230,6 @@ const AddCars = () => {
                                 {type}
                                 <input
                                     type='radio'
-                                    required
                                     onChange={engineHandler}
                                     name='engine'
                                     checked={type == engine}
