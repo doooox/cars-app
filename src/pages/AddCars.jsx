@@ -40,7 +40,6 @@ const AddCars = () => {
 
     const getSingleCar = async () => {
         if (!id) {
-            return alert('No car found!')
         }
             const carData = await CarsService.getCar(id);
             setBrand(carData.brand);

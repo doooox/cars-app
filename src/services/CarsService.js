@@ -30,7 +30,16 @@ class CarsService {
   async edit(id, car) {
     try {
       const data = await axiosObj.put(`/cars/${id}`, car);
+      return data;
     } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+  async delete(id){
+    try{
+      const data = await axiosObj.delete(`cars/${id}`);
+      return data;
+    }catch(error){
       console.log("Something went wrong", error);
     }
   }

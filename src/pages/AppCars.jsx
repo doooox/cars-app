@@ -14,6 +14,12 @@ const AppCars = () => {
         setIsLoading(false)
     }
 
+    const deleteCarHandler = async (id) =>{
+        const deleteCar = CarsService.delete(id);
+        if(deleteCar){
+        setCars([...cars.filter((car) => car.id !== id)]);
+        }
+    }
 
     useEffect(() => { getCarsHandler() }, [])
 
@@ -21,8 +27,8 @@ const AppCars = () => {
         <div>
             <h1>Car App</h1>
             <ul>
-                {(!isLoading) && cars.map((car) => <div  key={car.id}><SingleCar
-                   
+                {(!isLoading) && cars.map((car) => <div key={car.id}><SingleCar
+
                     brand={car.brand}
                     model={car.model}
                     year={car.year}
@@ -34,6 +40,8 @@ const AppCars = () => {
                     <Link to={`/edit/${car.id}`}>
                         <button className="btn btn-warning">Edit</button>
                     </Link>
+                    <button type='button' onClick={() => {
+                  deleteCarHandler(car.id) }}>Delete</button>
                 </div>)}
                 {(isLoading) && <p>Loading ...</p>}
             </ul>
